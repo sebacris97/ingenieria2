@@ -1,4 +1,3 @@
-print ("hola")
-x=3
-print (x)
-print ("mundo")
+from datetime import datetime
+
+print("C:\Users\sebac\Desktop\ingenieria2\bookflix\bookflix\plantillas")

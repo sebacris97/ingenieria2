@@ -1,15 +1,39 @@
+<!DOCTYPE html>
 <html>
 <body>
 <h1 style="color red">
-hola probando plantilla
+hola probando plant&iacute;lla  {# &iacute; pone la i con acento #}
+
+
+{# comentario una linea #}
+
+{% comment %} 
+	comentario de
+  varias lineas
+	  lalalala
+{% endcomment %}
+
 </h1>
-<p> el nombre del profesor es {{nombre_persona}} {{apellido_persona}} </p>
+
+
+
+
+
+    {% if nombre_persona == 'juan' %}
+		<p>el curso lo imparte el titular {{nombre_persona|upper}} {{apellido_persona.upper}}</p>  
+		{# tanto funciones como atributos de objeto#}
+		{# se acceden con solo un .atributo #}
+	{% else %} 																					   
+		<p>el curso lo imparte el suplente {{nombre_persona}} {{apellido_persona}}</p>  {# |upper y .upper :una es un filtor otra una funcion de los string #}
+	{% endif %}
+
+
 <p> <strong> Temas del curso: </strong> </p>
 
 <ul>
     {% if temas %}
 		{% for tema in temas %}
-			<li>{{ tema }}</li>
+			<li>{{ tema |first|lower }}</li>  {# |a|b encadeno filtros, muestra solo primer letra de cada tema y en minuscula #}
 		{% endfor %}
 	{% else %}
 		<p>no hay elementos que mostrar</p>
