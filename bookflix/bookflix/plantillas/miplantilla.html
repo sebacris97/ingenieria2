@@ -1,0 +1,20 @@
+<html>
+<body>
+<h1 style="color red">
+hola probando plantilla
+</h1>
+<p> el nombre del profesor es {{nombre_persona}} {{apellido_persona}} </p>
+<p> <strong> Temas del curso: </strong> </p>
+
+<ul>
+    {% if temas %}
+		{% for tema in temas %}
+			<li>{{ tema }}</li>
+		{% endfor %}
+	{% else %}
+		<p>no hay elementos que mostrar</p>
+	{% endif %}
+</ul>
+ 
+</body>
+</html>
