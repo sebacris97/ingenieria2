@@ -15,12 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from bookflix.views import saludo, damefecha, calculaedad
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('saludo/', saludo),
-    path('fecha/', damefecha),
-    path('calculo/<int:edad>/<int:ano>', calculaedad)
-    
 ]
