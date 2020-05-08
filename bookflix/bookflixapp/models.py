@@ -5,14 +5,24 @@ from django.db import models
 
 class Autor(models.Model):
     nombre = models.CharField(max_length=50)
+    apellido = models.CharField(max_length=50, default='')
+
+    def __str__(self):
+        return '%s %s' % (self.apellido, self.nombre)
 
 
 class Genero(models.Model):
     nombre = models.CharField(max_length=25)
 
+    def __str__(self):
+        return self.nombre
+
 
 class Editorial(models.Model):
     nombre = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.nombre
 
 
 class Libro(models.Model):
@@ -22,5 +32,5 @@ class Libro(models.Model):
     isbn = models.PositiveIntegerField()
     autor = models.ForeignKey(Autor, on_delete=models.CASCADE)
     editorial = models.ForeignKey(Editorial, on_delete=models.CASCADE)
-    genero = models.CharField(max_length=200)
+    genero = models.ManyToManyField(Genero)
     agnoedicion = models.DateField()
