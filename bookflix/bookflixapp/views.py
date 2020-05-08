@@ -1,7 +1,6 @@
 from django.shortcuts import render
 from .forms import FormularioAgregarLibro
 from .models import Libro
-from django.template import RequestContext
 
 
 # Create your views here.
@@ -14,13 +13,13 @@ def agregar_libro(request):
             nrocapitulos_libro = formularioLibro.cleaned_data['nrocapitulos_campo']
             isbn_libro = formularioLibro.cleaned_data['isbn_campo']
             autor_libro = formularioLibro.cleaned_data['autor_campo']
-            editorial_libro = formularioLibro.cleaned_data['editorial_libro']
-            genero_libro = formularioLibro.cleaned_data['genero_libro']
+            editorial_libro = formularioLibro.cleaned_data['editorial_campo']
+            genero_libro = formularioLibro.cleaned_data['genero_campo']
             agnoedicion_libro = formularioLibro.cleaned_data['agnoedicion_campo']
             nuevo_libro = Libro(titulo=titulo_libro, nropaginas=nropaginas_libro, nrocapitulos=nrocapitulos_libro, isbn=isbn_libro, autor=autor_libro, editorial=editorial_libro, agnoedicion=agnoedicion_libro)
-            nuevo_libro.genero = genero_libro
             nuevo_libro.save()
-            return render(request, "agregar_libro.html", {}, context_instance=RequestContext(request))
+            nuevo_libro.genero.add(*genero_libro)
+            return render(request, "agregar_libro.html", {'formularioLibro': formularioLibro})
     else:
         formularioLibro = FormularioAgregarLibro()
-    return render(request, "agregar_libro.html", {'formularioLibro': formularioLibro}, context_instance=RequestContext(request))
+    return render(request, "agregar_libro.html", {'formularioLibro': formularioLibro})

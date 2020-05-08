@@ -29,7 +29,7 @@ class Libro(models.Model):
     titulo = models.CharField(max_length=200)
     nropaginas = models.PositiveIntegerField()
     nrocapitulos = models.PositiveIntegerField()
-    isbn = models.PositiveIntegerField()
+    isbn = models.CharField(max_length=13)
     autor = models.ForeignKey(Autor, on_delete=models.CASCADE)
     editorial = models.ForeignKey(Editorial, on_delete=models.CASCADE)
     genero = models.ManyToManyField(Genero)
