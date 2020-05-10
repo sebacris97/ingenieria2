@@ -11,10 +11,16 @@ class FormularioAgregarLibro(forms.Form):
 
     def clean_nropaginas_campo(self):
         data = self.cleaned_data['nropaginas_campo']
-        if data < 1:
-            raise ValidationError('El nro de paginas debe ser como minimo 1')
+        if data < 1 or data > 2147483647:
+            raise ValidationError('El nro de paginas debe ser como minimo 1 y como maximo 2147483647')
         return data
     nrocapitulos_campo = forms.IntegerField(required=True, label='Numero De Capitulos')
+
+    def clean_nrocapitulos_campo(self):
+        data = self.cleaned_data['nrocapitulos_campo']
+        if data < 0 or data > 2147483647:
+            raise ValidationError('El nro de capitulos debe ser como minimo 0 y como maximo 2147483647')
+        return data
     isbn_campo = forms.CharField(required=True, label='ISBN', help_text='Introduzca ISBN de 13 numeros sin el guion')
 
     def clean_isbn_campo(self):
@@ -24,5 +30,5 @@ class FormularioAgregarLibro(forms.Form):
         return data
     autor_campo = forms.ModelChoiceField(queryset=Autor.objects.all(), initial=0, required=True, label='Autor')
     editorial_campo = forms.ModelChoiceField(queryset=Editorial.objects.all(), initial=0, required=True, label='Editorial')
-    genero_campo = forms.ModelMultipleChoiceField(queryset=Genero.objects.all(), initial=0, required=True, label='Genero')
-    agnoedicion_campo = forms.DateField(required=True, label='Fecha de Edicion')
+    genero_campo = forms.ModelMultipleChoiceField(queryset=Genero.objects.all(), widget=forms.CheckboxSelectMultiple, initial=0, required=True, label='Genero')
+    agnoedicion_campo = forms.DateField(required=True, widget=forms.SelectDateWidget(years=range(1700, 2100)), label='Fecha de Edicion')
