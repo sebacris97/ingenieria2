@@ -15,7 +15,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from bookflixapp import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', views.index),
+    path('agregarLibro/',views.agregar_libro),
+    path('agregarNovedad/',views.agregar_novedad),
+    path('verLibros/',views.ver_libros),
+    path('verNovedades/',views.ver_novedades),
 ]
