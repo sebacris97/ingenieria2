@@ -1,8 +1,7 @@
 from django import forms
 from django.core.exceptions import ValidationError
-from .models import Autor, Editorial, Genero, Novedad
+from .models import Autor, Editorial, Genero
 from datetime import datetime as d
-
 
 
 class FormularioAgregarLibro(forms.Form):
@@ -14,7 +13,6 @@ class FormularioAgregarLibro(forms.Form):
         if data < 1 or data > 2147483647:
             raise ValidationError('El nro de paginas debe ser como minimo 1 y como maximo 2147483647')
         return data
-    
     nrocapitulos_campo = forms.IntegerField(required=True, label='Numero De Capitulos')
 
     def clean_nrocapitulos_campo(self):
@@ -22,7 +20,6 @@ class FormularioAgregarLibro(forms.Form):
         if data < 0 or data > 2147483647:
             raise ValidationError('El nro de capitulos debe ser como minimo 0 y como maximo 2147483647')
         return data
-    
     isbn_campo = forms.CharField(required=True, label='ISBN', help_text='Introduzca ISBN de 13 numeros sin el guion')
 
     def clean_isbn_campo(self):
@@ -30,23 +27,8 @@ class FormularioAgregarLibro(forms.Form):
         if (10 != len(data) != 13) or not data.isdigit():
             raise ValidationError('El ISBN ingresado no tiene 13 numeros')
         return data
-    
-    
     autor_campo = forms.ModelChoiceField(queryset=Autor.objects.all(), initial=0, required=True, label='Autor')
     editorial_campo = forms.ModelChoiceField(queryset=Editorial.objects.all(), initial=0, required=True, label='Editorial')
     genero_campo = forms.ModelMultipleChoiceField(queryset=Genero.objects.all(), widget=forms.CheckboxSelectMultiple, initial=0, required=True, label='Genero')
-    today=str(str(d.now().year)+'-'+str(d.now().month)+'-'+str(d.now().day))
-    agnoedicion_campo = forms.DateField(required=True, widget=forms.SelectDateWidget(years=range(1700, (int(d.now().year))+1)),initial=today , label='Fecha de Edicion')
-
-
-class FormularioAgregarNovedad(forms.Form):
-    novedad_titulo_campo = forms.CharField(required=True, label='Titulo: ')
-    novedad_texto_campo = forms.CharField(required=True, label='Mensaje: ', widget=forms.Textarea)
-
-
-    def clean_novedad_titulo_campo(self):
-        data = self.cleaned_data['novedad_titulo_campo']
-        if len(data) < 1:
-            raise ValidationError('Ingrese un titulo mas largo')
-        return data
-
+    today = str(str(d.now().year) + '-' + str(d.now().month) + '-' + str(d.now().day))
+    agnoedicion_campo = forms.DateField(required=True, widget=forms.SelectDateWidget(years=range(1700, (int(d.now().year)) + 1)), initial=today, label='Fecha de Edicion')
