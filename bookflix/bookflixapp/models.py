@@ -15,7 +15,7 @@ class Autor(models.Model):
 
 
 class Genero(models.Model):
-    nombre = models.CharField(max_length=25)
+    nombre = models.CharField(max_length=25, unique=True)
 
     def __str__(self):
         return self.nombre
