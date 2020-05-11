@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title> resultado busqueda </title>
+
+</head>
+
+<body>
+
+
+<ul>
+<li> TITULOS &nbsp; PAGINAS &nbsp; CAPITULOS &nbsp; ISBN &nbsp; AÑO EDICION &nbsp; AUTOR &nbsp; EDITORIAL</li>
+{% for libro in libros %}
+<li>{{libro.titulo}} &nbsp; {{libro.nropaginas}} &nbsp; {{libro.nrocapitulos}} &nbsp;  {{libro.isbn}} &nbsp; 
+      {{libro.agnoedicion}} &nbsp;  {{libro.autor}} &nbsp;  {{libro.editorial}} &nbsp; 
+
+</li>
+{% endfor %}
+
+</ul>
+
+
+</html>

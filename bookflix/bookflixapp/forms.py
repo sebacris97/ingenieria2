@@ -3,6 +3,7 @@ from django.core.exceptions import ValidationError
 from .models import Autor
 from .models import Editorial
 from .models import Genero
+from .models import Novedad
 
 
 class FormularioAgregarLibro(forms.Form):
@@ -32,3 +33,16 @@ class FormularioAgregarLibro(forms.Form):
     editorial_campo = forms.ModelChoiceField(queryset=Editorial.objects.all(), initial=0, required=True, label='Editorial')
     genero_campo = forms.ModelMultipleChoiceField(queryset=Genero.objects.all(), widget=forms.CheckboxSelectMultiple, initial=0, required=True, label='Genero')
     agnoedicion_campo = forms.DateField(required=True, widget=forms.SelectDateWidget(years=range(1700, 2100)), label='Fecha de Edicion')
+
+
+class FormularioAgregarNovedad(forms.Form):
+    novedad_titulo_campo = forms.CharField(required=True, label='Titulo: ')
+    novedad_texto_campo = forms.CharField(required=True, label='Mensaje: ', widget=forms.Textarea)
+
+
+def clean_novedad_titulo_campo(self):
+    data = self.cleaned_data['isbn_campo']
+    if len(data) < 1:
+        raise ValidationError('Ingrese un titulo mas largo')
+    return data
+

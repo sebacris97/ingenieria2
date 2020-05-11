@@ -1,0 +1,14 @@
+<html>
+<head>
+	<title>Agregar Novedad</title>
+</head>
+<body>
+	<form action='' method='post'>
+		{% csrf_token %}
+		<table>
+			{{ formularioNovedad }}
+		</table>
+		<input type="submit" value="Agregar" />
+	</form>			
+</body>
+</html>

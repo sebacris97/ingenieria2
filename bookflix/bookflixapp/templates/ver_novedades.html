@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title> resultado busqueda </title>
+
+</head>
+
+<body>
+
+
+<ul>
+
+{% for novedad in novedades %}
+<li>{{novedad.titulo}} &nbsp; {{novedad.texto}}</li>
+{% endfor %}
+
+</ul>
+
+
+</html>
