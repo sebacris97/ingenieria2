@@ -17,6 +17,17 @@ from django.contrib import admin
 from django.urls import path
 from bookflixapp import views
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', views.index),
+    path('agregarLibro/',views.agregar_libro),
+    path('verLibros/',views.ver_libros),
+    path('pdf/',views.abrir_pdf),
+
+
+    path('register', views.register),
+    path('login', views.login),
+    path('logout', views.logout),
+
 ]
