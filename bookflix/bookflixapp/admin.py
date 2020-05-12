@@ -41,7 +41,7 @@ class NovedadAdmin(admin.ModelAdmin):
 
     list_display=('titulo','creada',)
     search_fields=('titulo','texto',)
-    list_filter=(('creada', DateRangeFilter),)
+    list_filter=(('creada', DateTimeRangeFilter),'creada')
 
 
 
