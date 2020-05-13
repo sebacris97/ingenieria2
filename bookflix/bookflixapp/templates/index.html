@@ -1,5 +1,4 @@
 
-
 <html>
 
 <head>
@@ -42,32 +41,28 @@
 
 
 
-
-<table  cellspacing="2" cellpadding="2" border="1" bgcolor=dddddd>
-
-	<tr>
-		<th colspan="3">NOVEDADES</th>
-	</tr>
-	
+<h2>Novedades</h2>
+<div style="border-style:solid; border-width: thin; border-color: black;overflow-y: scroll;width: 500px; height: 300px;background-color:#C0C0C0;">
+		
 	{% if novedades.exists %}
 
+
 		{% for novedad in novedades %}
-	<tr>
-				<td>{{novedad.creacion}}</td>
-				<td>{{novedad.titulo}}</td>
-				<td>{{novedad.texto}}</td>
-	</tr>
+				 {{novedad.creacion}}  </br>
+				<h3> {{novedad.titulo}} </h4>
+				{{novedad.texto|linebreaks}} </br></br>
+				<hr color="black" size="1">
+				
+	
 		{% endfor %}
 
 	{% else %}
-	<tr>
-		<td>No hay novedades para mostrar</td>
-	</tr>
+
+		No hay novedades para mostrar
+	
 	{% endif %}
 
-</table>
-
-
+</div>
 
 
 {% if user.is_authenticated %}
