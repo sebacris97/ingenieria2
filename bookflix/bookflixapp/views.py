@@ -53,7 +53,7 @@ def abrir_pdf(request):
 
 def index(request):
     d = timezone.now()-timedelta(days=7)
-    novedades = Novedad.objects.filter(creacion__gte=d)
+    novedades = Novedad.objects.filter(creacion__gte=d).order_by("-creacion")
     return render(request, "index.html",{"novedades":novedades})
 
 def register(request):
