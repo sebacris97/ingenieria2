@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from .forms import FormularioAgregarLibro
 from .models import Libro, Novedad
-from django.http import HttpResponse
+from django.http import HttpResponse, FileResponse, Http404
 from datetime import timedelta
 from django.utils import timezone
 
@@ -14,6 +14,7 @@ from django.contrib.auth.forms import UserCreationForm
 # Create your views here.
 
 
+"""
 def agregar_libro(request):
     if request.method == 'POST':
         formularioLibro = FormularioAgregarLibro(request.POST)
@@ -33,21 +34,13 @@ def agregar_libro(request):
     else:
         formularioLibro = FormularioAgregarLibro()
     return render(request, "agregar_libro.html", {'formularioLibro': formularioLibro})
+"""
 
 
 def ver_libros(request):
 
     libros=Libro.objects.filter()
     return render(request,"ver_libros.html",{"libros":libros})
-
-
-def abrir_pdf(request):
-    with open('C:\\Users\\sebac\\Downloads\\pdf ejemplo.pdf', 'rb') as pdf:
-        response = HttpResponse(pdf.read(), content_type='application/pdf')
-        response['Content-Disposition'] = 'inline;filename=pdf ejemplo.pdf'
-        pdf.close()
-        return response
-
 
 
 
@@ -105,7 +98,8 @@ def login(request):
                 # Hacemos el login manualmente
                 do_login(request, user)
                 # Y le redireccionamos a la portada
-                return redirect('/')
+                 #return redirect('/')
+                return render(request,"gracias.html")
 
     # Si llegamos al final renderizamos el formulario
     return render(request, "login.html", {'form': form})
