@@ -1,3 +1,5 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html>
 
@@ -10,16 +12,35 @@
 <body>
 
 
-<ul>
-<li> TITULOS &nbsp; PAGINAS &nbsp; CAPITULOS &nbsp; ISBN &nbsp; AÑO EDICION &nbsp; AUTOR &nbsp; EDITORIAL</li>
-{% for libro in libros %}
-<li>{{libro.titulo}} &nbsp; {{libro.nropaginas}} &nbsp; {{libro.nrocapitulos}} &nbsp;  {{libro.isbn}} &nbsp; 
-      {{libro.agnoedicion}} &nbsp;  {{libro.autor}} &nbsp;  {{libro.editorial}} &nbsp; 
 
-</li>
-{% endfor %}
+<table  cellspacing="2" cellpadding="2" border="1" bgcolor=dddddd>
 
-</ul>
+	<tr align="center">
+		<td>TITULO</td>
+		<td>PAGINAS</td>
+		<td>CAPITULOS</td>
+		<td>ISBN</td>
+		<td>AÑO EDICION</td>
+		<td>AUTOR</td>
+		<td>EDITORIAL</td>
+	</tr>
+
+	{% for libro in libros %}
+
+	<tr align="center">
+		<td><a href={{libro.pdf}}>{{libro.titulo}}</a></td>
+		<td>{{libro.nropaginas}}</td>
+		<td>{{libro.nrocapitulos}}</td>
+		<td>h{{libro.isbn}}</td>
+		<td>{{libro.agnoedicion}}</td>
+		<td>{{libro.autor}}</td>
+		<td>{{libro.editorial}}</td>
+	</tr>
+
+	{% endfor %}
+
+</table>
+
 
 
 </html>

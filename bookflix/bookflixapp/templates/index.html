@@ -20,24 +20,64 @@
 
 <header>
 
-    <nav> <!-- menu de navegacion -->
-    <ul>
-        <li><a href="/agregarLibro/">Agregar Libro</a></li>
-        <li><a href="/verLibros/">Ver Libros</a></li>
-    </ul>
-    </nav>
+{% if user.is_authenticated %}
+	<nav> <!-- menu de navegacion -->
+		<ul>
+			 <li><a href="/agregarLibro">Agregar Libro</a></li>
+			<li><a href="/verLibros">Ver Libros</a></li>
+			<li><a href="/logout">Cerrar sesión</a></li>
+		</ul>
+	</nav>
+{% else %}
+	<nav> <!-- menu de navegacion -->
+		<ul>
+			<li><a href="/login">Iniciar sesión</a></li>
+			<li><a href="/register">Registrarse</a></li>
+		</ul>
+	</nav>
+
+{% endif %}
 
 </header>
 
-<h2>Área para miembros</h2>
 
-<p>
-    Bienvenido <b>{{request.user.username}}</b>, 
-    esta página es exclusiva para usuarios registrados.
-</p>
 
-<hr />
-<a href="/logout">Cerrar sesión</a>
+
+<table  cellspacing="2" cellpadding="2" border="1" bgcolor=dddddd>
+
+	<tr>
+		<th colspan="3">NOVEDADES</th>
+	</tr>
+	
+	{% if novedades.exists %}
+
+		{% for novedad in novedades %}
+	<tr>
+				<td>{{novedad.creacion}}</td>
+				<td>{{novedad.titulo}}</td>
+				<td>{{novedad.texto}}</td>
+	</tr>
+		{% endfor %}
+
+	{% else %}
+	<tr>
+		<td>No hay novedades para mostrar</td>
+	</tr>
+	{% endif %}
+
+</table>
+
+
+
+
+{% if user.is_authenticated %}
+	<h2>Área para miembros</h2>
+
+	<p>
+		Bienvenido <b>{{request.user.username}}</b>, 
+		esta página es exclusiva para usuarios registrados.
+	</p>
+{% endif %}
 
 
 </body>
