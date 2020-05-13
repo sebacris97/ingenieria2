@@ -1,0 +1,36 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+
+
+<link rel="shortcut icon" type="image/png" href='{% static "images/logo.png" %}'/>
+
+<title>
+
+login exitoso
+
+</title>
+
+
+</head>
+
+<body>
+
+<div style="text-align:center;">
+
+    <h1>Bienvenido <b>{{request.user.username}}</b>, </h1>
+
+    <span id="timer">
+
+        <script src="{% static 'js/gracias.js' %}"></script>
+
+    </span>
+
+</div>
+
+
+</body>
+</html>

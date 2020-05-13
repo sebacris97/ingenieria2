@@ -28,7 +28,7 @@
 	{% for libro in libros %}
 
 	<tr align="center">
-		<td><a href={{libro.pdf}}>{{libro.titulo}}</a></td>
+		<td><a href="{{libro.pdf.url}}">{{libro.titulo}}</a></td>
 		<td>{{libro.nropaginas}}</td>
 		<td>{{libro.nrocapitulos}}</td>
 		<td>h{{libro.isbn}}</td>
