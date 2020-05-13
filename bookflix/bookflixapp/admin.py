@@ -39,9 +39,9 @@ class EditorialAdmin(admin.ModelAdmin):
 
 class NovedadAdmin(admin.ModelAdmin):
 
-    list_display=('titulo','creada',)
+    list_display=('titulo','creacion',)
     search_fields=('titulo','texto',)
-    list_filter=(('creada', DateTimeRangeFilter),'creada')
+    list_filter=(('creacion', DateTimeRangeFilter),'creacion')
 
 
 

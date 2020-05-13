@@ -1,6 +1,5 @@
 from django.db import models
 from django.core.validators import RegexValidator
-# Create your models here.
 
 
 class Autor(models.Model):
@@ -44,6 +43,10 @@ class Libro(models.Model):
     genero = models.ManyToManyField(Genero)
     agnoedicion = models.DateField(verbose_name="Año de edicion")
 
+    def content_file_name(instance, filename):
+        return '/'.join(['libros', filename])
+    pdf = models.FileField(upload_to=content_file_name)
+
 
     def __str__(self):
         return self.titulo
@@ -57,7 +60,7 @@ class Libro(models.Model):
 class Novedad(models.Model):
     titulo = models.CharField(max_length=200)
     texto = models.TextField()
-    creada = models.DateTimeField(auto_now=True,verbose_name="Creacion")
+    creacion = models.DateTimeField(auto_now_add=True,verbose_name="Creacion")
 
     def __str__(self):
         return self.titulo

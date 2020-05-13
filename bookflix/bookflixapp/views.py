@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect
 from .forms import FormularioAgregarLibro
-from .models import Libro
+from .models import Libro, Novedad
 from django.http import HttpResponse
+from datetime import timedelta
+from django.utils import timezone
 
 from django.contrib.auth import logout as do_logout
 from django.contrib.auth import authenticate
@@ -35,7 +37,7 @@ def agregar_libro(request):
 
 def ver_libros(request):
 
-    libros=Libro.objects.filter(titulo__icontains='') #__icontains es como like de sql
+    libros=Libro.objects.filter()
     return render(request,"ver_libros.html",{"libros":libros})
 
 
@@ -50,15 +52,9 @@ def abrir_pdf(request):
 
 
 def index(request):
-    # Si estamos identificados devolvemos la portada
-    if request.user.is_authenticated:
-        return render(request, "index.html")
-    # En otro caso redireccionamos al login
-    return redirect('/login')
-
-
-def index(request):
-    return render(request, "index.html")
+    d = timezone.now()-timedelta(days=7)
+    novedades = Novedad.objects.filter(creacion__gte=d)
+    return render(request, "index.html",{"novedades":novedades})
 
 def register(request):
     # Creamos el formulario de autenticación vacío
