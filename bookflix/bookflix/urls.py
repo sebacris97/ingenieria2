@@ -16,18 +16,23 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from bookflixapp import views
+from django.conf.urls import url, include
+from django.conf import settings
 
+from django.conf.urls.static import static
 
 urlpatterns = [
+    
     path('admin/', admin.site.urls),
     path('', views.index),
-    path('agregarLibro/',views.agregar_libro),
     path('verLibros/',views.ver_libros),
-    path('pdf/',views.abrir_pdf),
 
+    path('register/', views.register),
+    path('login/', views.login),
+    path('logout/', views.logout),
 
-    path('register', views.register),
-    path('login', views.login),
-    path('logout', views.logout),
+    #path('accounts/', include('django.contrib.auth.urls')),
 
-]
+    #path('agregarLibro/',views.agregar_libro),
+
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
