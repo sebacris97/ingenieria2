@@ -1,0 +1,15 @@
+.novedades{
+word-wrap: break-word;border-style:solid; border-width: thin; border-color: black;overflow-y: auto;width: 500px;height: 300px;background-color:#C0C0C0;text-align: center;
+
+}
+
+.novedades hr:last-child{
+  display: none;
+}
+
+.novedades small {
+  display: block;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
