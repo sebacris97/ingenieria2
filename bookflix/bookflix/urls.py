@@ -26,6 +26,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index),
     path('verLibros/',views.ver_libros),
+    
+    path('verCapitulos/<int:pk>',views.ver_capitulos),
+    #<int:pk> significa que ver capitulos recibe de parametro la en pk
+    #la clave primaria del libro desde el template que se lo llama (desde verLibros)
 
     path('register/', views.register),
     path('login/', views.login),
