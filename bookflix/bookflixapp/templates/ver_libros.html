@@ -1,21 +1,10 @@
-{% load static %}
+{% extends 'base.html' %}
 
-<!DOCTYPE html>
-<html>
+{% block content %}
 
-<head>
+<table  class="table">
 
-<title> resultado busqueda </title>
-
-</head>
-
-<body>
-
-
-
-<table  cellspacing="2" cellpadding="2" border="1" bgcolor=dddddd>
-
-	<tr align="center">
+	<tr>
 		<td>TITULO</td>
 		<td>PAGINAS</td>
 		<td>CAPITULOS</td>
@@ -27,8 +16,8 @@
 
 	{% for libro in libros %}
 
-	<tr align="center">
-		<td><a href="{{libro.pdf.url}}">{{libro.titulo}}</a></td>
+	<tr>
+		<td><a href="/verCapitulos/{{libro.id}}">{{libro.titulo}}</a></td>
 		<td>{{libro.nropaginas}}</td>
 		<td>{{libro.nrocapitulos}}</td>
 		<td>h{{libro.isbn}}</td>
@@ -41,6 +30,4 @@
 
 </table>
 
-
-
-</html>
+{% endblock %}

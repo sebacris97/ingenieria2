@@ -1,8 +1,8 @@
-<html>
-<head>
-	<title>Agregar Libro</title>
-</head>
-<body>
+{% extends 'base.html' %}
+
+
+{% block content %}
+
 	<form action='' method='post'>
 		{% csrf_token %}
 		<table>
@@ -10,5 +10,5 @@
 		</table>
 		<input type="submit" value="Agregar" />
 	</form>			
-</body>
-</html>
+
+{% enblock %}

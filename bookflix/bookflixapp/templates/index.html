@@ -1,23 +1,14 @@
+{% extends 'base.html' %}
+{% load static %}
 
-<html>
+{% block content %}
 
-<head>
-    <title>
-        mi pagina
-    </title>
-
-   <meta name="description" content="Esta es una prueba de mi pagina de html"/>
-   <meta name="keywords" content="diseño, desarrollo, paginas web">
-
-
-
-</head>
-
-<body>
 
 
 
 <header>
+
+    <link rel="stylesheet" type="text/css" href='{% static "css/estilo.css" %}'/>
 
 {% if user.is_authenticated %}
 	<nav> <!-- menu de navegacion -->
@@ -40,8 +31,10 @@
 
 
 
-<h2>Novedades</h2>
-<div style="word-wrap: break-word;border-style:solid; border-width: thin; border-color: black;overflow-y: scroll;width: 500px;height: 300px;background-color:#C0C0C0;">
+
+
+<h3>Novedades</h3>
+<div  class='novedades' align="center">
 		
 	{% if novedades.exists %}
 
@@ -50,15 +43,14 @@
 				 {{novedad.creacion}}  </br>
 				<h3> {{novedad.titulo}} </h4>
 				{{novedad.texto|linebreaks}} </br></br>
-				<hr color="black" size="1">
+				<hr>
 				
 	
 		{% endfor %}
 
 	{% else %}
 
-		<span style="font-size: 25;margin:25%; display:table;">No hay novedades</br>
-		&nbsp&nbsp&nbsp&nbsppara mostrar</span>
+		<small class="text-muted">No hay novedades</small>
 	
 	{% endif %}
 
@@ -75,6 +67,6 @@
 {% endif %}
 
 
-</body>
 
-</html>
+{% endblock %}
+
