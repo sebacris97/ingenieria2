@@ -84,8 +84,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'bookflixdb',
 		'USER': 'postgres',
-		'PASSWORD': 'contrasena',
-		'HOST':'127.0.0.1',
+		'PASSWORD': 'Deth2000',
 		'DATABASE_PORT':'5432',
     }
 }

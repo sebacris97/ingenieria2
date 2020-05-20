@@ -22,22 +22,22 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    
-    path('admin/', admin.site.urls),
-    path('', include('core.urls')),
-    path('', views.index),
-    path('verLibros/',views.ver_libros),
-    
-    path('verCapitulos/<int:pk>',views.ver_capitulos),
-    #<int:pk> significa que ver capitulos recibe de parametro la en pk
-    #la clave primaria del libro desde el template que se lo llama (desde verLibros)
 
-    path('register/', views.register),
-    path('login/', views.login),
-    path('logout/', views.logout),
+                  path('admin/', admin.site.urls, name='admin'),
+                  path('', views.index, name='index'),
 
-    #path('accounts/', include('django.contrib.auth.urls')),
+                  path('verLibros/', views.ver_libros, name='verLibros'),
 
-    #path('agregarLibro/',views.agregar_libro),
+                  path('verCapitulos/<int:pk>', views.ver_capitulos, name='verCapitulos'),
+                  # <int:pk> significa que ver capitulos recibe de parametro la en pk
+                  # la clave primaria del libro desde el template que se lo llama (desde verLibros)
 
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+                  path('register/', views.register, name='register'),
+                  path('login/', views.login, name='login'),
+                  path('logout/', views.logout, name='logout'),
+
+                  # path('accounts/', include('django.contrib.auth.urls')),
+
+                  # path('agregarLibro/',views.agregar_libro),
+
+              ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
