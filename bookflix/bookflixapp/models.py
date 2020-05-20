@@ -2,6 +2,8 @@ from django.db import models
 from django.core.validators import RegexValidator, MinValueValidator, FileExtensionValidator
 #los validator te ahorran tener que hardcodear algunas validaciones que django ya provee
 
+
+
 class Autor(models.Model):
     nombre = models.CharField(max_length=50)
     apellido = models.CharField(max_length=50, default='')
@@ -11,6 +13,7 @@ class Autor(models.Model):
 
     class Meta:
         verbose_name_plural = "Autores"
+        ordering = ["apellido","nombre"]
 
 
 class Genero(models.Model):
@@ -21,6 +24,7 @@ class Genero(models.Model):
     
     class Meta:
         verbose_name_plural = "Generos"
+        ordering = ["nombre"]
 
 
 class Editorial(models.Model):
@@ -31,19 +35,20 @@ class Editorial(models.Model):
 
     class Meta:
         verbose_name_plural = "Editoriales"
+        ordering = ["nombre"]
 
 
 class Capitulo(models.Model):
     libro = models.ForeignKey('Libro', on_delete=models.SET_NULL, null=True) #libro al cual pertenece el capitulo
-    numero = models.PositiveIntegerField(validators=[MinValueValidator(1)], verbose_name='Numero del capitulo', null=True)
-    nropaginas = models.PositiveIntegerField(validators=[MinValueValidator(1)],verbose_name="Numero de paginas", null=True)
-    titulo = models.CharField(max_length=100,null=True)
+    numero = models.PositiveIntegerField(validators=[MinValueValidator(1)], verbose_name='Numero del capitulo', null=True, blank=True)
+    nropaginas = models.PositiveIntegerField(validators=[MinValueValidator(1)],verbose_name="Numero de paginas", null=True, blank=True)
 
     def __str__(self):
         return str(self.libro) + ' - Capitulo: ' + str(self.numero)
 
     class Meta:
         verbose_name_plural = "Capitulos"
+        ordering = ["numero"]
         unique_together = ('libro', 'numero',) #no existen 2 capitulos 1 para el mismo libro
 
     def content_file_name(instance, filename):
@@ -70,7 +75,9 @@ class Libro(models.Model):
 
     class Meta:
         verbose_name_plural = "Libros"
-        
+        ordering = ["titulo"]
+
+
 
 class Novedad(models.Model):
     titulo = models.CharField(max_length=100)
