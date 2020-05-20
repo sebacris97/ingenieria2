@@ -3,15 +3,13 @@ from .models import Libro, Novedad, Capitulo
 from datetime import timedelta
 from django.utils import timezone
 
-
 from django.contrib.auth import logout as do_logout
 from django.contrib.auth import authenticate
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login as do_login
-from django.contrib.auth.forms import UserCreationForm
+from bookflixapp.forms import RegistrationForm
 
-
-#from .forms import FormularioAgregarLibro
+# from .forms import FormularioAgregarLibro
 
 # Create your views here.
 
@@ -39,39 +37,38 @@ def agregar_libro(request):
 """
 
 
-
-
 def ver_libros(request):
-    libros=Libro.objects.all()
-    return render(request,"ver_libros.html",{"libros":libros})
+    libros = Libro.objects.all()
+    return render(request, "ver_libros.html", {"libros": libros})
 
 
-
-def ver_capitulos(request,pk):
-    
-    capitulos=Capitulo.objects.filter(libro__id=pk)
-    if len(capitulos)>0: #parche temporal para los libros que no tienen capitulos
-        titulo=capitulos[0].libro
-        #el parametro lo recibe de urls. lo que hago es filtrar los capitulos
-        #que pertenecen al libro que recibo como parametro
-        #(si hiciese objects.all() me estoy quedando con todos los capitulos de todos los libros)
-        return render(request,"ver_capitulos.html",{"capitulos":capitulos,"titulo":titulo})
+def ver_capitulos(request, pk):
+    capitulos = Capitulo.objects.filter(libro__id=pk)
+    if len(capitulos) > 0:  # parche temporal para los libros que no tienen capitulos
+        titulo = capitulos[0].libro
+        # el parametro lo recibe de urls. lo que hago es filtrar los capitulos
+        # que pertenecen al libro que recibo como parametro
+        # (si hiciese objects.all() me estoy quedando con todos los capitulos de todos los libros)
+        return render(request, "ver_capitulos.html", {"capitulos": capitulos, "titulo": titulo})
     else:
-        return render(request,"index.html") #si no se le subio capitulo te manda a index
-
+        return render(request, "index.html")  # si no se le subio capitulo te manda a index
 
 
 def index(request):
-    d = timezone.now()-timedelta(days=7)
+    d = timezone.now() - timedelta(days=7)
+    f = timezone.now()
+    delt = timedelta(days=7)
+    aux = d.date()
     novedades = Novedad.objects.filter(creacion__gte=d)
-    return render(request, "index.html",{"novedades":novedades})
+    return render(request, "index.html", {"novedades": novedades})
+
 
 def register(request):
     # Creamos el formulario de autenticación vacío
-    form = UserCreationForm()
+    form = RegistrationForm()
     if request.method == "POST":
         # Añadimos los datos recibidos al formulario
-        form = UserCreationForm(data=request.POST)
+        form = RegistrationForm(data=request.POST)
         # Si el formulario es válido...
         if form.is_valid():
 
@@ -86,13 +83,12 @@ def register(request):
                 return redirect('/')
 
     # Si queremos borramos los campos de ayuda
-    form.fields['username'].help_text = None
+    #form.fields['username'].help_text = None
     form.fields['password1'].help_text = None
     form.fields['password2'].help_text = None
 
     # Si llegamos al final renderizamos el formulario
     return render(request, "register.html", {'form': form})
-
 
 
 def login(request):
@@ -109,27 +105,25 @@ def login(request):
 
             # Verificamos las credenciales del usuario
             user = authenticate(username=username, password=password)
-        
+
             # Si existe un usuario con ese nombre y contraseña
-            if user is not None :
+            if user is not None:
                 # Hacemos el login manualmente
                 do_login(request, user)
-                
+
                 if user.is_superuser:
-                    return redirect("/admin")# or your url name
-                
+                    return redirect("/admin")  # or your url name
+
                 # Y le redireccionamos a la portada
-                #return redirect('/')
-                return render(request,"gracias.html")
+                # return redirect('/')
+                return render(request, "index.html")
 
     # Si llegamos al final renderizamos el formulario
     return render(request, "login.html", {'form': form})
-
 
 
 def logout(request):
     # Finalizamos la sesión
     do_logout(request)
     # Redireccionamos a la portada
-    return redirect('/')
-
+    return redirect('/login/')
