@@ -14,6 +14,7 @@
 	<nav> <!-- menu de navegacion -->
 		<ul>
 			<li><a href="/verLibros">Ver Libros</a></li>
+			<li><a href="/crearPerfil">Crear Perfil</a></li>
 			<li><a href="/logout">Cerrar sesión</a></li>
 		</ul>
 	</nav>
@@ -41,7 +42,7 @@
 
 		{% for novedad in novedades %}
 				 {{novedad.creacion}}  </br>
-				<h3> {{novedad.titulo}} </h4>
+				<h4> {{novedad.titulo}} </h4>
 				{{novedad.texto|linebreaks}} </br></br>
 				<hr>
 				
@@ -61,7 +62,7 @@
 	<h2>Área para miembros</h2>
 
 	<p>
-		Bienvenido <b>{{request.user.username}}</b>, 
+		Bienvenido <b>{{request.user.first_name}}</b>,
 		esta página es exclusiva para usuarios registrados.
 	</p>
 {% endif %}

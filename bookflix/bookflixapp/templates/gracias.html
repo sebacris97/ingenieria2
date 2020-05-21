@@ -2,18 +2,11 @@
 
 
 {% block content %}
+    <div style="text-align:center;">
+        <h1>Bienvenido <b>{{request.user.username}}</b>, </h1><a href="/logout">Cerrar sesion</a>
+        <span id="timer">
+            <script src="static/js/gracias.js"></script>
+        </span>
 
-<div style="text-align:center;">
-
-    <h1>Bienvenido <b>{{request.user.username}}</b>, </h1>
-
-    <span id="timer">
-
-        <script src="{% static 'js/gracias.js' %}"></script>
-
-    </span>
-
-</div>
-
-
+    </div>
 {% endblock %}
