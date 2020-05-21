@@ -1,19 +1,13 @@
 {% extends 'base.html' %}
 
 
-
 {% block content %}
+    <div style="text-align:center;">
+        <h3>Nombre de Perfil: <b>{{perfil.username}}</b></h3><a href="/logout">Cerrar sesion</a>
+        <p><a href="/">Home</a></p>
+        <span id="timer">
+            <script src="static/js/gracias.js"></script>
+        </span>
 
-<h2>Crear Perfil</h2>
-
-<form method="POST">
-    {{ form.as_p }}
-    {% csrf_token %}
-    <button type="submit">Crear</button>
-</form>
-
-<hr />
-
-<a href="/">Home</a>
-
+    </div>
 {% endblock %}
