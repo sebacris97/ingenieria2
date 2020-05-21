@@ -1,12 +1,9 @@
 from django import forms
 from django.core.exceptions import ValidationError
-from .models import Autor, Editorial, Genero, Usuario, UsuarioCust
+from .models import Autor, Editorial, Genero, UsuarioCust
 from datetime import datetime as d
-from django.contrib.auth.admin import UserAdmin
-from django.contrib import admin
-from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-#from bookflixapp.models import Usuario
+from django.http import request
 
 
 class FormularioAgregarLibro(forms.Form):
@@ -74,4 +71,5 @@ class RegistrationForm(UserCreationForm):
         return user
 
 
-
+class CreateProfileForm(forms.Form):
+    profilename = forms.CharField(required=True, label="Nombre de Perfil")

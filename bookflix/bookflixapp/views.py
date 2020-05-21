@@ -1,13 +1,14 @@
 from django.shortcuts import render, redirect
-from .models import Libro, Novedad, Capitulo
+from .models import Libro, Novedad, Capitulo, Perfil
 from datetime import timedelta
 from django.utils import timezone
+from django.http import request as rq
 
 from django.contrib.auth import logout as do_logout
 from django.contrib.auth import authenticate
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login as do_login
-from bookflixapp.forms import RegistrationForm
+from .forms import RegistrationForm, CreateProfileForm
 
 # from .forms import FormularioAgregarLibro
 
@@ -127,3 +128,19 @@ def logout(request):
     do_logout(request)
     # Redireccionamos a la portada
     return redirect('/login/')
+
+
+def createprofile(request):
+    if request.method == "POST":
+        form = CreateProfileForm(data=request.POST)
+        if form.is_valid():
+            #idd = request.user__id
+            usuario = request.user
+            profilename = form.cleaned_data["profilename"]
+            profile = Perfil(usuario=usuario, username=profilename)
+            profile.save()
+            if profile is not None:
+                return redirect("/")
+    else:
+        form = CreateProfileForm()
+        return render(request, "perfil.html", {'form': form})

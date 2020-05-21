@@ -112,4 +112,8 @@ class Usuario(models.Model):
 
 
 class Perfil(models.Model):
-    usuario = models.ForeignKey('Usuario', on_delete=models.SET_NULL, null=True)
+    usuario = models.ForeignKey('UsuarioCust', on_delete=models.SET_NULL, null=True)
+    username = models.CharField(max_length=20)
+
+    class Meta:
+        verbose_name_plural = "Perfiles"
