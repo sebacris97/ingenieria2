@@ -1,6 +1,6 @@
 from django import forms
 from django.core.exceptions import ValidationError
-from .models import Autor, Editorial, Genero, UsuarioCust
+from .models import Autor, Editorial, Genero, Usuario, UsuarioCust
 from datetime import datetime as d
 from django.contrib.auth.forms import UserCreationForm
 from django.http import request
@@ -58,17 +58,6 @@ class RegistrationForm(UserCreationForm):
                   "password2",
                   "tarjeta",
                   )
-
-    def save(self, commit=True):
-        user = super(RegistrationForm, self).save(commit=False)
-        user.username = self.cleaned_data['email']
-        user.first_name = self.cleaned_data['first_name']
-        user.last_name = self.cleaned_data['last_name']
-        user.email = self.cleaned_data['email']
-        user.tarjeta = self.cleaned_data['tarjeta']
-        if commit:
-            user.save()
-        return user
 
 
 class CreateProfileForm(forms.Form):

@@ -1,11 +1,12 @@
 from django.shortcuts import render, redirect
-from .models import Libro, Novedad, Capitulo, Perfil
+from bookflixapp.models import Libro, Novedad, Capitulo, Perfil, Usuario, UsuarioCust
 from datetime import timedelta
 from django.utils import timezone
 from django.http import request as rq
 
 from django.contrib.auth import logout as do_logout
 from django.contrib.auth import authenticate
+from django.contrib.auth.models import User
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login as do_login
 from .forms import RegistrationForm, CreateProfileForm
@@ -74,12 +75,21 @@ def register(request):
         if form.is_valid():
 
             # Creamos la nueva cuenta de usuario
-            user = form.save()
-
+            username = form.cleaned_data["email"]
+            password1 = form.cleaned_data["password1"]
+            password2 = form.cleaned_data["password2"]
+            first_name = form.cleaned_data["first_name"]
+            last_name = form.cleaned_data["last_name"]
+            tarjeta = form.cleaned_data["tarjeta"]
+            fecha = form.cleaned_data["fecha_de_nacimiento"]
+            u = User(username=username, first_name=first_name, last_name=last_name, password=password1, email=username)
+            u.save()
+            user = Usuario(user=u, fecha_de_nacimiento=fecha, tarjeta=tarjeta)
             # Si el usuario se crea correctamente 
             if user is not None:
                 # Hacemos el login manualmente
-                do_login(request, user)
+                user.save()
+                do_login(request, u)
                 # Y le redireccionamos a la portada
                 return redirect('/')
 
@@ -116,8 +126,8 @@ def login(request):
                     return redirect("/admin")  # or your url name
 
                 # Y le redireccionamos a la portada
-                # return redirect('/')
-                return render(request, "index.html")
+                return redirect('/')
+                #return render(request, "index.html")
 
     # Si llegamos al final renderizamos el formulario
     return render(request, "login.html", {'form': form})
@@ -134,13 +144,22 @@ def createprofile(request):
     if request.method == "POST":
         form = CreateProfileForm(data=request.POST)
         if form.is_valid():
-            #idd = request.user__id
-            usuario = request.user
             profilename = form.cleaned_data["profilename"]
+            user = request.user
+            usuario = Usuario.objects.get(user=user)
             profile = Perfil(usuario=usuario, username=profilename)
             profile.save()
             if profile is not None:
                 return redirect("/")
     else:
         form = CreateProfileForm()
-        return render(request, "perfil.html", {'form': form})
+        return render(request, "crear_perfil.html", {'form': form})
+
+
+def verperfil(request):
+    user = request.user
+    usuario = Usuario.objects.get(user=user)
+    perfil = Perfil.objects.filter(usuario=usuario)
+    return render(request, 'perfil.html', {"perfil": perfil[1]})
+
+
