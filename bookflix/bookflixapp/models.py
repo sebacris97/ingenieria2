@@ -119,3 +119,12 @@ class Perfil(models.Model):
 
     class Meta:
         verbose_name_plural = "Perfiles"
+
+
+class Trailer(models.Model):
+    imagen = models.ImageField(on_delete=models.SET_NULL, null=True)
+    texto = models.CharField(max_length=500, null=False)
+    libro = models.OneToOneField(Libro, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name_plural = "Perfiles"
