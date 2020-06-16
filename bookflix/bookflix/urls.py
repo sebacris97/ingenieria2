@@ -26,6 +26,7 @@ urlpatterns = [
                 path('admin/', admin.site.urls, name='admin'),
                 path('', views.index, name='index'),
                 path('perfil/', views.verperfil, name='verperfil'),
+                path('selecPerfil/', views.selecperfil, name='seleccionarPerfil'),
                 path('crearPerfil/', views.createprofile, name='crearPerfil'),
                 path('verLibros/', views.ver_libros, name='verLibros'),
 
