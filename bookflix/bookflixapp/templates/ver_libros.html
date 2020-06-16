@@ -2,13 +2,13 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<style type="text/css">
-	#lista(
-		background-color: #ffd700;
-		)
-</style>
 
-{% for libro in libros %}
+	<form>
+		{{ filter.form.as_p }}
+		<button type='submit'>Buscar</button>
+	</form>
+
+{% for libro in filter.qs %}
 
 <div id="lista">
 	<h1><a href="/verCapitulos/{{libro.id}}">{{libro.titulo}}</a></h1>
