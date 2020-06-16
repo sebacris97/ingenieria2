@@ -75,6 +75,7 @@ class Libro(models.Model):
     editorial = models.ForeignKey(Editorial, on_delete=models.CASCADE)
     genero = models.ManyToManyField(Genero)
     agnoedicion = models.DateField(verbose_name="Año de edicion")
+    trailer = models.CharField(max_length=500, default='')
 
     def __str__(self):
         return self.titulo
@@ -82,6 +83,11 @@ class Libro(models.Model):
     class Meta:
         verbose_name_plural = "Libros"
         ordering = ["titulo"]
+
+    def content_file_name(instance, filename):
+        nombre = filename
+        return '/'.join(['libros', instance.titulo, nombre])
+    imagen = models.ImageField(null=True, upload_to=content_file_name)
 
 
 class Novedad(models.Model):
@@ -116,15 +122,6 @@ class Usuario(models.Model):
 class Perfil(models.Model):
     usuario = models.ForeignKey('Usuario', on_delete=models.SET_NULL, null=True)
     username = models.CharField(max_length=20)
-
-    class Meta:
-        verbose_name_plural = "Perfiles"
-
-
-class Trailer(models.Model):
-    imagen = models.ImageField(null=True)
-    texto = models.CharField(max_length=500, null=False)
-    libro = models.OneToOneField(Libro, on_delete=models.CASCADE)
 
     class Meta:
         verbose_name_plural = "Perfiles"
