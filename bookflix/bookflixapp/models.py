@@ -75,7 +75,7 @@ class Libro(models.Model):
     editorial = models.ForeignKey(Editorial, on_delete=models.CASCADE)
     genero = models.ManyToManyField(Genero)
     agnoedicion = models.DateField(verbose_name="Año de edicion")
-    trailer = models.CharField(max_length=500, default='')
+    trailer = models.TextField(max_length=500, default='')
 
     def __str__(self):
         return self.titulo
