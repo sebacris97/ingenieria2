@@ -1,4 +1,9 @@
-{% extends 'base.html' %}
+{% if user.is_authenticated %}
+    {% include 'base.html' %}
+{% else %}
+    {% include 'base_login.html' %}
+{% endif %}
+
 {% load static %}
 
 {% block content %}
@@ -6,21 +11,57 @@
 
 
 
-<header>
+<!--<header>
 
     <link rel="stylesheet" type="text/css" href='{% static "css/estilo.css" %}'/>
 
 {% if user.is_authenticated %}
-	<nav> <!-- menu de navegacion -->
-		<ul>
-			<li><a href="/verLibros">Ver Libros</a></li>
-			<li><a href="/perfil">Ver Perfil</a></li>
-			<li><a href="/crearPerfil">Crear Perfil</a></li>
-			<li><a href="/logout">Cerrar sesión</a></li>
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">Navbar</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/verLibros">Libros</a>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Perfil
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="/selecPerfil">Seleccionar Perfil</a>
+          <a class="dropdown-item" href="/perfil">Ver Perfil</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="/crearPerfil">Crear Perfil</a>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/logout" tabindex="-1" aria-disabled="true">Cerrar Sesion</a>
+      </li>
+    </ul>
+    <form class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+  </div>
+</nav>
+		<nav>  menu de navegacion
+		<ul class="list-group list-group-horizontal">
+			<li class="list-group-item"><a href="/verLibros">Ver Libros</a></li>
+			<li class="list-group-item"><a href="/selecPerfil">Seleccionar Perfil</a></li>
+			<li class="list-group-item"><a href="/perfil">Ver Perfil</a></li>
+			<li class="list-group-item"><a href="/crearPerfil">Crear Perfil</a></li>
+			<li class="list-group-item"><a href="/logout">Cerrar sesión</a></li>
 		</ul>
 	</nav>
 {% else %}
-	<nav> <!-- menu de navegacion -->
+	<nav>  menu de navegacion
 		<ul>
 			<li><a href="/login">Iniciar sesión</a></li>
 			<li><a href="/register">Registrarse</a></li>
@@ -30,39 +71,31 @@
 {% endif %}
 
 </header>
+-->
 
 
 
 
 
-<h3>Novedades</h3>
+<h3 align="center">Novedades</h3>
 <div  class='novedades' align="center">
-		
 	{% if novedades.exists %}
-
-
 		{% for novedad in novedades %}
 				 {{novedad.creacion}}  </br>
-				<h4> {{novedad.titulo}} </h4>
+				<h4 align="center"> {{novedad.titulo}} </h4>
 				{{novedad.texto|linebreaks}} </br></br>
 				<hr>
-				
-	
 		{% endfor %}
-
 	{% else %}
-
 		<small class="text-muted">No hay novedades</small>
-	
 	{% endif %}
-
 </div>
 
 
 {% if user.is_authenticated %}
-	<h2>Área para miembros</h2>
+	<h2 align="center">Área para miembros</h2>
 
-	<p>
+	<p align="center">
 		Bienvenido <b>{{request.user.first_name}}</b>,
 		esta página es exclusiva para usuarios registrados.
 	</p>

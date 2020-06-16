@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<title>Seleccionar Perfil</title>
+    <div style="text-align:center;">
+        <h3>Selecciona el perfil.</h3>
+        <form action="/perfil/" method="POST">{% csrf_token %}
+            <input type="checkbox">
+            <select name="nombre">
+            {% for perfil in perfiles %}
+                <option name="nombe">{{perfil.username}}</option>
+            {% endfor %}
+            </select>
+        <p><input type="submit" value="Seleccionar"></p></form>
+        <p><a href="/">Home</a></p>
+        <span id="timer">
+            <script src="static/js/gracias.js"></script>
+        </span>
+
+    </div>
+{% endblock %}
