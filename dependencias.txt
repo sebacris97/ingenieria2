@@ -1,4 +1,4 @@
 https://github.com/silentsokolov/django-admin-rangefilter
 
-
+pip install django-filter
 https://github.com/un1t/django-cleanup
