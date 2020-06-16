@@ -122,7 +122,7 @@ class Perfil(models.Model):
 
 
 class Trailer(models.Model):
-    imagen = models.ImageField(on_delete=models.SET_NULL, null=True)
+    imagen = models.ImageField(null=True)
     texto = models.CharField(max_length=500, null=False)
     libro = models.OneToOneField(Libro, on_delete=models.CASCADE)
 
