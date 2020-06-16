@@ -3,7 +3,6 @@ from django.core.exceptions import ValidationError
 from .models import Autor, Editorial, Genero, Usuario, UsuarioCust
 from datetime import datetime as d
 from django.contrib.auth.forms import UserCreationForm
-from django.http import request
 
 
 class FormularioAgregarLibro(forms.Form):

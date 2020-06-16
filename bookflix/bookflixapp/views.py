@@ -6,8 +6,9 @@ from django.http import request as rq
 
 from django.contrib.auth import logout as do_logout
 from django.contrib.auth import authenticate
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, AnonymousUser
 from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import hashers
 from django.contrib.auth import login as do_login
 from .forms import RegistrationForm, CreateProfileForm
 
@@ -76,19 +77,20 @@ def register(request):
 
             # Creamos la nueva cuenta de usuario
             username = form.cleaned_data["email"]
-            password1 = form.cleaned_data["password1"]
-            password2 = form.cleaned_data["password2"]
+            realpassword = hashers.make_password(password=form.cleaned_data["password1"])
             first_name = form.cleaned_data["first_name"]
             last_name = form.cleaned_data["last_name"]
             tarjeta = form.cleaned_data["tarjeta"]
             fecha = form.cleaned_data["fecha_de_nacimiento"]
-            u = User(username=username, first_name=first_name, last_name=last_name, password=password1, email=username)
+            u = User(username=username, first_name=first_name, last_name=last_name, password=realpassword, email=username)
             u.save()
             user = Usuario(user=u, fecha_de_nacimiento=fecha, tarjeta=tarjeta)
             # Si el usuario se crea correctamente 
             if user is not None:
                 # Hacemos el login manualmente
                 user.save()
+                p = Perfil(usuario=user, username=u.first_name)
+                p.save()
                 do_login(request, u)
                 # Y le redireccionamos a la portada
                 return redirect('/')
@@ -109,26 +111,26 @@ def login(request):
         # Añadimos los datos recibidos al formulario
         form = AuthenticationForm(data=request.POST)
         # Si el formulario es válido...
-        if form.is_valid():
-            # Recuperamos las credenciales validadas
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password']
-
-            # Verificamos las credenciales del usuario
-            user = authenticate(username=username, password=password)
-
-            # Si existe un usuario con ese nombre y contraseña
-            if user is not None:
-                # Hacemos el login manualmente
-                do_login(request, user)
-
-                if user.is_superuser:
-                    return redirect("/admin")  # or your url name
-
+        #if form.is_valid():
+        # Recuperamos las credenciales validadas
+        username = request.POST["email"]
+        password = request.POST["pass"]
+        # Verificamos las credenciales del usuario
+        user = authenticate(username=username, password=password)
+        # Si existe un usuario con ese nombre y contraseña
+        if user is not None:
+            # Hacemos el login manualmente
+            do_login(request, user)
+            if user.is_superuser:
+                return redirect("/admin")  # or your url name
                 # Y le redireccionamos a la portada
+            else:
                 return redirect('/')
-                #return render(request, "index.html")
-
+            #return render(request, "index.html")
+        else:
+            return redirect('/')
+        #else:
+            #return redirect('/register')
     # Si llegamos al final renderizamos el formulario
     return render(request, "login.html", {'form': form})
 
@@ -157,9 +159,36 @@ def createprofile(request):
 
 
 def verperfil(request):
-    user = request.user
-    usuario = Usuario.objects.get(user=user)
-    perfil = Perfil.objects.filter(usuario=usuario)
-    return render(request, 'perfil.html', {"perfil": perfil[1]})
+    if request.method == "GET":
+        user = request.user
+        anon = User(AnonymousUser)
+        if user.username != "":
+            usuario = Usuario.objects.filter(user=user)
+            perfil = Perfil.objects.filter(usuario=usuario[0], selected=True)
+            return render(request, 'perfil.html', {"perfil": perfil[0]})
+        else:
+            return render(request, 'perfil.html')
+    else:
+        if request.method == "POST":
+            name = request.POST["nombre"]
+            user = request.user
+            usuario = Usuario.objects.get(user=user)
+            perfil_sel = Perfil.objects.filter(selected=True, usuario=usuario)
+            perfil = Perfil.objects.filter(username=name, usuario=usuario)
+            p = perfil_sel[0]
+            p.selected = False
+            p.save()
+            p2 = perfil[0]
+            p2.selected = True
+            p2.save()
+            return render(request, 'perfil.html', {"perfil": perfil[0]})
 
 
+def selecperfil(request):
+    if request.method == "GET":
+        user = request.user
+        usuario = Usuario.objects.filter(user=user)
+        perfiles = Perfil.objects.filter(usuario=usuario[0])
+        return render(request, 'selec_perfil.html', {"perfiles": perfiles})
+    if request.method == "POST":
+        return render(request, 'perfil.html')
