@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'base_login.html' %}
 
 
 
@@ -11,9 +11,4 @@
     {% csrf_token %}
     <button type="submit">Registrar</button>
 </form>
-
-<hr />
-
-<a href="/login">Iniciar sesión</a>
-
 {% endblock %}

@@ -129,7 +129,7 @@ def login(request):
                 return redirect('/')
             #return render(request, "index.html")
         else:
-            return redirect('/')
+            return redirect('/register')
         #else:
             #return redirect('/register')
     # Si llegamos al final renderizamos el formulario
@@ -140,7 +140,7 @@ def logout(request):
     # Finalizamos la sesión
     do_logout(request)
     # Redireccionamos a la portada
-    return redirect('/login/')
+    return redirect('/')
 
 
 def createprofile(request):
