@@ -150,6 +150,9 @@ def createprofile(request):
             profilename = form.cleaned_data["profilename"]
             user = request.user
             usuario = Usuario.objects.get(user=user)
+            p = Perfil.objects.filter(usuario=usuario[0], selected=True)
+            p.selected = False
+            p.save()
             profile = Perfil(usuario=usuario, username=profilename)
             profile.save()
             if profile is not None:
