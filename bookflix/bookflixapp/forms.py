@@ -3,6 +3,7 @@ from django.core.exceptions import ValidationError
 from .models import Autor, Editorial, Genero, Usuario, UsuarioCust
 from datetime import datetime as d
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 
 
 class FormularioAgregarLibro(forms.Form):
@@ -57,6 +58,15 @@ class RegistrationForm(UserCreationForm):
                   "password2",
                   "tarjeta",
                   )
+
+    def clean_email(self):
+        data = self.cleaned_data["email"]
+        try:
+            user = User.objects.get(email=data)
+        except User.DoesNotExist:
+            return data
+        raise ValidationError("El email ya esta registrado")
+
 
 
 class CreateProfileForm(forms.Form):
