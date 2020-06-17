@@ -13,15 +13,16 @@
 <div id="lista">
 	<h1><a href="/verCapitulos/{{libro.id}}">{{libro.titulo}}</a></h1>
 	<img style="float:left" width=300px height=400p src="{{libro.imagen.url}}">
-	<p style="font-size:20px">Trailer: {{libro.trailer}}
-	<br>Paginas: {{libro.nropaginas}}
-	<br>Capitulos: {{libro.nrocapitulos}}
-	<br>ISBN: {{libro.isbn}}
-	<br>Año de Edición: {{libro.agnoedicion}}
-	<br>Autor: {{libro.autor}}
-	<br>Editorial: {{libro.editorial}}</p>
+	<p style="font-size:20px">
+	<br><strong>Paginas: </strong>{{libro.nropaginas}}
+	<br><strong>Capitulos: </strong>{{libro.nrocapitulos}}
+	<br><strong>ISBN: </strong>{{libro.isbn}}
+	<br><strong>Año de Edición: </strong>{{libro.agnoedicion}}
+	<br><strong>Autor: </strong>{{libro.autor}}
+	<br><strong>Editorial: </strong>{{libro.editorial}}
+	<br><strong>Trailer: </strong>{{libro.trailer}}</p>
 </div>
-
+<br><br><br>
 	{% endfor %}
 
 </table>
