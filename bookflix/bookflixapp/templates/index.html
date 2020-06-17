@@ -78,7 +78,8 @@
 
 
 <h3 align="center">Novedades</h3>
-<div  class='novedades' align="center">
+<hr>
+<div  class="pre-scrollable" align="center">
 	{% if novedades.exists %}
 		{% for novedad in novedades %}
 				 {{novedad.creacion}}  </br>
@@ -96,7 +97,7 @@
 	<h2 align="center">Área para miembros</h2>
 
 	<p align="center">
-		Bienvenido <b>{{request.user.first_name}}</b>,
+		Bienvenido <b>{{request.user.email}}</b>,
 		esta página es exclusiva para usuarios registrados.
 	</p>
 {% endif %}
