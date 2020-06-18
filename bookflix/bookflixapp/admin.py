@@ -22,7 +22,7 @@ class LibroAdmin(admin.ModelAdmin):
     get_genero.short_description = 'genero'  # Renames column head
 
     filter_horizontal = ('genero',)
-    list_display = ('titulo', 'nropaginas', 'nrocapitulos', 'isbn', 'autor', 'editorial', 'get_genero', 'agnoedicion', 'trailer', 'imagen')
+    list_display = ('titulo', 'nropaginas', 'nrocapitulos', 'isbn', 'autor', 'editorial', 'get_genero', 'agnoedicion',)
     search_fields = ('titulo', 'autor__nombre', 'editorial__nombre', 'genero__nombre',)
     list_filter = ('autor', 'editorial', ('agnoedicion', DateRangeFilter), 'genero')
     inlines = [CapituloInline]  # se registra en liro la clase creada anteriormente
